@@ -1,0 +1,95 @@
+#!/bin/sh
+wait_for_device() {
+	RESULT=1
+	if [ $# == 2 ]; then
+		DEV=$1
+		TIMEOUT=$2
+		i=0
+		while [ $i -le $TIMEOUT ]; do
+	        grep $DEV /proc/diskstats > /dev/null
+			if [ $? == 0 ]; then
+					echo Found $DEV > /dev/stderr
+					echo "$DEV Time=$i" >> /tmp/dev.log
+					RESULT=0
+					break
+			else
+				echo $DEV not found > /dev/stderr
+				sleep 1
+				i=`expr $i + 1`
+			fi
+		done
+
+	fi
+	echo $RESULT
+}
+
+
+MMC_DEV=mmcblk0p1
+MMC_MOUNT_POINT=/mnt/floppy
+
+USB_DEV=sda
+USB_MOUNT_POINT=/mnt/src
+
+setup_gpios() {
+	echo 42 > /sys/class/gpio/export
+	echo 0 > /sys/class/gpio/gpio42/value
+	echo 47 > /sys/class/gpio/export
+	echo 0 > /sys/class/gpio/gpio47/value
+}
+
+
+start_system_services() {
+	/etc/rc.d/init.d/network start
+	/etc/rc.d/init.d/syslog start
+}
+
+load_kernel_modules() {
+	modprobe sddetect slot=0
+	modprobe sddetect slot=1
+	modprobe ehci-hcd
+	modprobe tracker_buttons
+	modprobe 8189es.ko
+}
+
+setup_sd_card() {
+	ret=$(wait_for_device "$MMC_DEV" 10)
+	if [ 0 == $ret ]; then
+		mount /dev/$MMC_DEV $MMC_MOUNT_POINT
+		mkdir -p $MMC_MOUNT_POINT/audio
+		if [ -e $MMC_MOUNT_POINT/noautostart ]; then
+			echo Autostatup disabled!! Exiting..
+			exit 0
+		fi
+	fi
+}
+
+setup_usb_disk() {
+	ret=$(wait_for_device "$USB_DEV" 20)
+	if [ 0 == $ret ]; then
+		mount /dev/$USB_DEV $USB_MOUNT_POINT
+	fi
+}
+
+configure_wifi() {
+	ifconfig wlan0 up
+}
+
+start_jamhub_services() {
+	/usr/bin/audio&
+	/usr/bin/menu&
+	LD_LIBRARY_PATH=/usr/local/networkservice /usr/local/networkservice/service_main >/dev/null 2>&1 &
+}
+
+main() {
+	setup_gpios
+	load_kernel_modules
+	start_system_services
+	setup_sd_card
+	configure_wifi
+	touch /tmp/jamhub_init.done
+	start_jamhub_services
+	setup_usb_disk
+}
+
+main
+

@@ -1,0 +1,21 @@
+diff -Nrub a/arch/arm/mach-mx35/mx35_3stack.c b/arch/arm/mach-mx35/mx35_3stack.c
+--- a/arch/arm/mach-mx35/mx35_3stack.c	2013-12-11 12:30:38.000000000 +0530
++++ b/arch/arm/mach-mx35/mx35_3stack.c	2013-12-11 12:35:23.000000000 +0530
+@@ -91,14 +91,16 @@
+ 	 .mask_flags = 0},
+ 	{
+ 	 .name = "nor.rootfs.1",
+-	 .size = 28 * 1024 * 1024,
++	 .size = 56 * 1024 * 1024,
+ 	 .offset = MTDPART_OFS_APPEND,
+ 	 .mask_flags = 0},
++#if 0
+ 	{
+ 	 .name = "nor.rootfs.2",
+ 	 .size = 28 * 1024 * 1024,
+ 	 .offset = MTDPART_OFS_APPEND,
+ 	 .mask_flags = 0},
++#endif
+ 	{
+ 	 .name = "FIS directory",
+ 	 .size = 12 * 1024,

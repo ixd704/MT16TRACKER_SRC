@@ -1,0 +1,46 @@
+Subject: [PATCH] MX35: Change NOR partitions 
+---
+ arch/arm/mach-mx35/mx35_3stack.c |    19 -+--+++++++--++-+-+
+ 1 files changed, 12 insertions(+), 7 deletions(-)
+
+diff --git a/arch/arm/mach-mx35/mx35_3stack.c b/arch/arm/mach-mx35/mx35_3stack.c
+index 306f2e8..1f766d0 100644
+--- a/arch/arm/mach-mx35/mx35_3stack.c
++++ b/arch/arm/mach-mx35/mx35_3stack.c
+
+@@ -77,23 +77,28 @@ static struct mtd_partition mxc_nor_partitions[] = {
+ 	 .name = "Bootloader",
+ 	 .size = 512 * 1024,
+ 	 .offset = 0x00000000,
+-	 .mask_flags = MTD_WRITEABLE	/* force read-only */
++	 .mask_flags = 0	
+ 	 },
+ 	{
+-	 .name = "nor.Kernel",
+-	 .size = 4 * 1024 * 1024,
++	 .name = "nor.Kernel.1",
++	 .size = 3 * 1024 * 1024,
++	 .offset = MTDPART_OFS_APPEND,
++	 .mask_flags = 0},
++	{
++	 .name = "nor.Kernel.2",
++	 .size = 3 * 1024 * 1024,
+ 	 .offset = MTDPART_OFS_APPEND,
+ 	 .mask_flags = 0},
+ 	{
+-	 .name = "nor.userfs",
+-	 .size = 30 * 1024 * 1024,
++	 .name = "nor.rootfs.1",
++	 .size = 28 * 1024 * 1024,
+ 	 .offset = MTDPART_OFS_APPEND,
+ 	 .mask_flags = 0},
+ 	{
+-	 .name = "nor.rootfs",
++	 .name = "nor.rootfs.2",
+ 	 .size = 28 * 1024 * 1024,
+ 	 .offset = MTDPART_OFS_APPEND,
+-	 .mask_flags = MTD_WRITEABLE},
++	 .mask_flags = 0},
+ 	{
+ 	 .name = "FIS directory",
+ 	 .size = 12 * 1024,

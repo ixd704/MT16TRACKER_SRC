@@ -1,0 +1,51 @@
+diff -Nrub a/arch/arm/mach-mx35/board-mx35_3stack.h b/arch/arm/mach-mx35/board-mx35_3stack.h
+--- a/arch/arm/mach-mx35/board-mx35_3stack.h	2014-01-04 00:17:31.000000000 -0500
++++ b/arch/arm/mach-mx35/board-mx35_3stack.h	2014-01-04 00:34:43.000000000 -0500
+@@ -196,6 +196,7 @@
+ extern int __init mx35_3stack_init_mc13892(void);
+ extern int __init mx35_3stack_init_mc9s08dz60(void);
+ extern int is_suspend_ops_started(void);
++extern void tracker_gpio_init(void) __init;
+ 
+ #endif				/* CONFIG_MACH_MX35_3DS */
+ #endif				/* __ASM_ARCH_MXC_BOARD_MX35_3STACK_H__ */
+diff -Nrub a/arch/arm/mach-mx35/mx35_3stack.c b/arch/arm/mach-mx35/mx35_3stack.c
+--- a/arch/arm/mach-mx35/mx35_3stack.c	2014-01-04 00:17:48.000000000 -0500
++++ b/arch/arm/mach-mx35/mx35_3stack.c	2014-01-04 00:47:43.000000000 -0500
+@@ -1159,6 +1159,7 @@
+ 	mxc_init_gps();
+ 	mxc_init_mlb();
+ 	mxc_init_fec();
++	tracker_gpio_init();
+ }
+ 
+ #define PLL_PCTL_REG(brmo, pd, mfd, mfi, mfn)		\
+diff -Nrub a/arch/arm/mach-mx35/mx35_3stack_gpio.c b/arch/arm/mach-mx35/mx35_3stack_gpio.c
+--- a/arch/arm/mach-mx35/mx35_3stack_gpio.c	2014-01-04 00:18:21.000000000 -0500
++++ b/arch/arm/mach-mx35/mx35_3stack_gpio.c	2014-01-04 01:30:22.000000000 -0500
+@@ -1475,3 +1475,25 @@
+ }
+ 
+ EXPORT_SYMBOL(gpio_buttons_lcd_deactivate);
++
++__init void tracker_gpio_init(void)
++{
++	unsigned pad_value = PAD_CTL_DRV_NORMAL | PAD_CTL_PKE_ENABLE | PAD_CTL_100K_PU | PAD_CTL_DRV_3_3V | PAD_CTL_PUE_PUD | PAD_CTL_SRE_SLOW;
++
++	/*ADC PDN */
++	mxc_request_iomux(MX35_PIN_LD15, MUX_CONFIG_GPIO);
++	mxc_iomux_set_pad(MX35_PIN_LD15, pad_value);
++	gpio_request(IOMUX_TO_GPIO(MX35_PIN_LD15), NULL);
++	gpio_direction_output(IOMUX_TO_GPIO(MX35_PIN_LD15), 0);
++	gpio_set_value(IOMUX_TO_GPIO(MX35_PIN_LD15), 0);
++	mxc_free_iomux(MX35_PIN_LD15, MUX_CONFIG_GPIO);
++	
++	/*AUDIO LED */
++	mxc_request_iomux(MX35_PIN_LD10, MUX_CONFIG_GPIO);
++	mxc_iomux_set_pad(MX35_PIN_LD10, pad_value);
++	gpio_request(IOMUX_TO_GPIO(MX35_PIN_LD10), NULL);
++	gpio_direction_output(IOMUX_TO_GPIO(MX35_PIN_LD10), 0);
++	gpio_set_value(IOMUX_TO_GPIO(MX35_PIN_LD10), 0);
++	mxc_free_iomux(MX35_PIN_LD10, MUX_CONFIG_GPIO);
++}
++

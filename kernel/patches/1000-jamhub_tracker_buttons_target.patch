@@ -1,0 +1,149 @@
+Binary files a/arch/arm/mach-mx35/.mx35_3stack_gpio.c.swp and b/arch/arm/mach-mx35/.mx35_3stack_gpio.c.swp differ
+diff -Nrub a/arch/arm/mach-mx35/mx35_3stack_gpio.c b/arch/arm/mach-mx35/mx35_3stack_gpio.c
+--- a/arch/arm/mach-mx35/mx35_3stack_gpio.c	2014-01-02 11:34:49.000000000 -0500
++++ b/arch/arm/mach-mx35/mx35_3stack_gpio.c	2014-01-02 11:49:25.000000000 -0500
+@@ -1436,51 +1436,17 @@
+ void gpio_buttons_lcd_activate(void)
+ {
+ 	unsigned int pad_val = PAD_CTL_HYS_SCHMITZ | PAD_CTL_100K_PU | PAD_CTL_DRV_3_3V;
+-/*
+-	mxc_request_iomux(MX35_PIN_LD0, MUX_CONFIG_GPIO);
+-	mxc_request_iomux(MX35_PIN_LD1, MUX_CONFIG_GPIO);
++
+ 	mxc_request_iomux(MX35_PIN_LD2, MUX_CONFIG_GPIO);
+ 	mxc_request_iomux(MX35_PIN_LD3, MUX_CONFIG_GPIO);
+ 	mxc_request_iomux(MX35_PIN_LD4, MUX_CONFIG_GPIO);
+ 	mxc_request_iomux(MX35_PIN_LD5, MUX_CONFIG_GPIO);
+-	mxc_request_iomux(MX35_PIN_LD6, MUX_CONFIG_GPIO);
+-	mxc_request_iomux(MX35_PIN_LD7, MUX_CONFIG_GPIO);
+-	mxc_request_iomux(MX35_PIN_LD8, MUX_CONFIG_GPIO);
+-	mxc_request_iomux(MX35_PIN_LD9, MUX_CONFIG_GPIO);
+-	mxc_request_iomux(MX35_PIN_LD10, MUX_CONFIG_GPIO);
+-	mxc_request_iomux(MX35_PIN_LD11, MUX_CONFIG_GPIO);
+-	mxc_request_iomux(MX35_PIN_LD12, MUX_CONFIG_GPIO);
+-	mxc_request_iomux(MX35_PIN_LD13, MUX_CONFIG_GPIO);
+-	mxc_request_iomux(MX35_PIN_LD14, MUX_CONFIG_GPIO);*/
+-	mxc_request_iomux(MX35_PIN_LD15, MUX_CONFIG_GPIO);
+-	mxc_request_iomux(MX35_PIN_LD16, MUX_CONFIG_GPIO);
+-	mxc_request_iomux(MX35_PIN_LD17, MUX_CONFIG_GPIO);
+-	mxc_request_iomux(MX35_PIN_LD18, MUX_CONFIG_GPIO);
+-/*
+-	mxc_iomux_set_pad(MX35_PIN_LD0, pad_val);
+-	mxc_iomux_set_pad(MX35_PIN_LD1, pad_val);
++
+ 	mxc_iomux_set_pad(MX35_PIN_LD2, pad_val);
+ 	mxc_iomux_set_pad(MX35_PIN_LD3, pad_val);
+ 	mxc_iomux_set_pad(MX35_PIN_LD4, pad_val);
+ 	mxc_iomux_set_pad(MX35_PIN_LD5, pad_val);
+-	mxc_iomux_set_pad(MX35_PIN_LD6, pad_val);
+-	mxc_iomux_set_pad(MX35_PIN_LD7, pad_val);
+-	mxc_iomux_set_pad(MX35_PIN_LD8, pad_val);
+-	mxc_iomux_set_pad(MX35_PIN_LD9, pad_val);
+-	mxc_iomux_set_pad(MX35_PIN_LD10, pad_val);
+-	mxc_iomux_set_pad(MX35_PIN_LD11, pad_val);
+-	mxc_iomux_set_pad(MX35_PIN_LD12, pad_val);
+-	mxc_iomux_set_pad(MX35_PIN_LD13, pad_val);
+-	mxc_iomux_set_pad(MX35_PIN_LD14, pad_val);*/
+-	mxc_iomux_set_pad(MX35_PIN_LD15, pad_val);
+-	mxc_iomux_set_pad(MX35_PIN_LD16, pad_val);
+-	mxc_iomux_set_pad(MX35_PIN_LD17, pad_val);
+-	mxc_iomux_set_pad(MX35_PIN_LD18, pad_val);
+-
+-/*	gpio_request(IOMUX_TO_GPIO(MX35_PIN_LD0), NULL);
+-	gpio_direction_input(IOMUX_TO_GPIO(MX35_PIN_LD0));
+-	gpio_request(IOMUX_TO_GPIO(MX35_PIN_LD1), NULL);
+-	gpio_direction_input(IOMUX_TO_GPIO(MX35_PIN_LD1));
++
+ 	gpio_request(IOMUX_TO_GPIO(MX35_PIN_LD2), NULL);
+ 	gpio_direction_input(IOMUX_TO_GPIO(MX35_PIN_LD2));
+ 	gpio_request(IOMUX_TO_GPIO(MX35_PIN_LD3), NULL);
+@@ -1489,32 +1455,6 @@
+ 	gpio_direction_input(IOMUX_TO_GPIO(MX35_PIN_LD4));
+ 	gpio_request(IOMUX_TO_GPIO(MX35_PIN_LD5), NULL);
+ 	gpio_direction_input(IOMUX_TO_GPIO(MX35_PIN_LD5));
+-	gpio_request(IOMUX_TO_GPIO(MX35_PIN_LD6), NULL);
+-	gpio_direction_input(IOMUX_TO_GPIO(MX35_PIN_LD6));
+-	gpio_request(IOMUX_TO_GPIO(MX35_PIN_LD7), NULL);
+-	gpio_direction_input(IOMUX_TO_GPIO(MX35_PIN_LD7));
+-	gpio_request(IOMUX_TO_GPIO(MX35_PIN_LD8), NULL);
+-	gpio_direction_input(IOMUX_TO_GPIO(MX35_PIN_LD8));
+-	gpio_request(IOMUX_TO_GPIO(MX35_PIN_LD9), NULL);
+-	gpio_direction_input(IOMUX_TO_GPIO(MX35_PIN_LD9));
+-	gpio_request(IOMUX_TO_GPIO(MX35_PIN_LD10), NULL);
+-	gpio_direction_input(IOMUX_TO_GPIO(MX35_PIN_LD10));
+-	gpio_request(IOMUX_TO_GPIO(MX35_PIN_LD11), NULL);
+-	gpio_direction_input(IOMUX_TO_GPIO(MX35_PIN_LD11));
+-	gpio_request(IOMUX_TO_GPIO(MX35_PIN_LD12), NULL);
+-	gpio_direction_input(IOMUX_TO_GPIO(MX35_PIN_LD12));
+-	gpio_request(IOMUX_TO_GPIO(MX35_PIN_LD13), NULL);
+-	gpio_direction_input(IOMUX_TO_GPIO(MX35_PIN_LD13));
+-	gpio_request(IOMUX_TO_GPIO(MX35_PIN_LD14), NULL);
+-	gpio_direction_input(IOMUX_TO_GPIO(MX35_PIN_LD14));*/
+-	gpio_request(IOMUX_TO_GPIO(MX35_PIN_LD15), NULL);
+-	gpio_direction_input(IOMUX_TO_GPIO(MX35_PIN_LD15));
+-	gpio_request(IOMUX_TO_GPIO(MX35_PIN_LD16), NULL);
+-	gpio_direction_input(IOMUX_TO_GPIO(MX35_PIN_LD16));
+-	gpio_request(IOMUX_TO_GPIO(MX35_PIN_LD17), NULL);
+-	gpio_direction_input(IOMUX_TO_GPIO(MX35_PIN_LD17));
+-	gpio_request(IOMUX_TO_GPIO(MX35_PIN_LD18), NULL);
+-	gpio_direction_input(IOMUX_TO_GPIO(MX35_PIN_LD18));
+ }
+ 
+ EXPORT_SYMBOL(gpio_buttons_lcd_activate);
+@@ -1524,25 +1464,10 @@
+  */
+ void gpio_buttons_lcd_deactivate(void)
+ {
+-/*	mxc_free_iomux(MX35_PIN_LD0, MUX_CONFIG_GPIO);
+-	mxc_free_iomux(MX35_PIN_LD1, MUX_CONFIG_GPIO);
+ 	mxc_free_iomux(MX35_PIN_LD2, MUX_CONFIG_GPIO);
+ 	mxc_free_iomux(MX35_PIN_LD3, MUX_CONFIG_GPIO);
+ 	mxc_free_iomux(MX35_PIN_LD4, MUX_CONFIG_GPIO);
+ 	mxc_free_iomux(MX35_PIN_LD5, MUX_CONFIG_GPIO);
+-	mxc_free_iomux(MX35_PIN_LD6, MUX_CONFIG_GPIO);
+-	mxc_free_iomux(MX35_PIN_LD7, MUX_CONFIG_GPIO);
+-	mxc_free_iomux(MX35_PIN_LD8, MUX_CONFIG_GPIO);
+-	mxc_free_iomux(MX35_PIN_LD9, MUX_CONFIG_GPIO);
+-	mxc_free_iomux(MX35_PIN_LD10, MUX_CONFIG_GPIO);
+-	mxc_free_iomux(MX35_PIN_LD11, MUX_CONFIG_GPIO);
+-	mxc_free_iomux(MX35_PIN_LD12, MUX_CONFIG_GPIO);
+-	mxc_free_iomux(MX35_PIN_LD13, MUX_CONFIG_GPIO);
+-	mxc_free_iomux(MX35_PIN_LD14, MUX_CONFIG_GPIO);*/
+-	mxc_free_iomux(MX35_PIN_LD15, MUX_CONFIG_GPIO);
+-	mxc_free_iomux(MX35_PIN_LD16, MUX_CONFIG_GPIO);
+-	mxc_free_iomux(MX35_PIN_LD17, MUX_CONFIG_GPIO);
+-	mxc_free_iomux(MX35_PIN_LD18, MUX_CONFIG_GPIO);
+ }
+ 
+ EXPORT_SYMBOL(gpio_buttons_lcd_deactivate);
+Binary files a/drivers/misc/.tracker_buttons.c.swp and b/drivers/misc/.tracker_buttons.c.swp differ
+diff -Nrub a/drivers/misc/tracker_buttons.c b/drivers/misc/tracker_buttons.c
+--- a/drivers/misc/tracker_buttons.c	2014-01-02 11:34:55.000000000 -0500
++++ b/drivers/misc/tracker_buttons.c	2014-01-02 11:52:07.000000000 -0500
+@@ -37,25 +37,10 @@
+ struct kfifo *rx_fifo;
+ 
+ unsigned int gpioLD[] = {
+-/*	IOMUX_TO_GPIO(MX35_PIN_LD0),
+-	IOMUX_TO_GPIO(MX35_PIN_LD1),
+ 	IOMUX_TO_GPIO(MX35_PIN_LD2),
+ 	IOMUX_TO_GPIO(MX35_PIN_LD3),
+ 	IOMUX_TO_GPIO(MX35_PIN_LD4),
+-	IOMUX_TO_GPIO(MX35_PIN_LD5),
+-	IOMUX_TO_GPIO(MX35_PIN_LD6),
+-	IOMUX_TO_GPIO(MX35_PIN_LD7),
+-	IOMUX_TO_GPIO(MX35_PIN_LD8),
+-	IOMUX_TO_GPIO(MX35_PIN_LD9),
+-	IOMUX_TO_GPIO(MX35_PIN_LD10),
+-	IOMUX_TO_GPIO(MX35_PIN_LD11),
+-	IOMUX_TO_GPIO(MX35_PIN_LD12),
+-	IOMUX_TO_GPIO(MX35_PIN_LD13),
+-	IOMUX_TO_GPIO(MX35_PIN_LD14),*/
+-	IOMUX_TO_GPIO(MX35_PIN_LD15),
+-	IOMUX_TO_GPIO(MX35_PIN_LD16),
+-	IOMUX_TO_GPIO(MX35_PIN_LD17),
+-	IOMUX_TO_GPIO(MX35_PIN_LD18)
++	IOMUX_TO_GPIO(MX35_PIN_LD5)
+ };
+ 
+ int debounce_count = 3;

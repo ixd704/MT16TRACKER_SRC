@@ -1,0 +1,72 @@
+option py_generic_services = true;
+
+package tracker;
+
+message RequestNone {}
+message ResponseNone {}
+
+enum StatusEnum {
+	FAILED = 0;
+	SUCCESS = 1;
+}
+
+enum NetworkStatusEnum {
+     OFFLINE = 0;
+     BINDING_TO_ACCOUNT = 1;
+     ONLINE = 2;
+     REMOTE_CONTROLLED = 3;
+}
+
+message NetworkServiceStatus {
+   required NetworkStatusEnum serviceStatus=1;
+   optional string pinCode=2;
+}
+
+
+message Status {
+  required StatusEnum status = 1 [default = FAILED];
+}
+
+message Setting {
+	required string key=1;
+	required string value=2;
+}
+
+message SettingsMap {
+	repeated Setting Settings=1;
+}
+
+message String {
+	required string value=1;
+}
+
+message StringList {
+  repeated string value=1;
+}
+
+message MessageInt {
+	required int32 value=1;
+}
+
+
+service Menu {
+  rpc get_settings(RequestNone) returns(SettingsMap);
+  rpc update_settings(SettingsMap) returns(Status);
+  rpc network_service_status_changed(NetworkServiceStatus) returns(ResponseNone);
+  rpc files_uploaded_to_cloud_notification(StringList) returns(ResponseNone);
+}
+
+
+service NetworkService {
+  rpc update_settings(SettingsMap) returns(Status);
+  rpc upload_to_cloud(StringList) returns(Status);
+}
+
+service Audio {
+  rpc SetParams(String) returns(ResponseNone);
+  rpc GetParams(RequestNone) returns(String);
+  rpc StartCapture(RequestNone) returns(Status);
+  rpc StopCapture(RequestNone) returns(Status);
+  rpc ToggleEncoding(RequestNone) returns(Status);
+  rpc GetEncodingStatus(RequestNone) returns(MessageInt); 
+}
