@@ -19,3 +19,5 @@ In order to minimize human errors, I have created some scripts, that will apply 
 3. From the ltib dir, execute ./ltib -c and change firmware version for generating the updated firmware.
 
 
+There is a virtual Machine image here that you can use to compile modules for it.
+https://drive.google.com/file/d/1CSSgpR9fipYMpJrM-eVudqqgNHH85TV1/view?usp=sharing
