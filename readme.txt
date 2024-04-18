@@ -1,3 +1,5 @@
+MT16 Tracker uses a Freescale i.mx35_3stack board
+
 This file describes the procedure to apply the patches available under Mercurial repository on top of the 
 VirtualBox image shared by JamHub.
 
